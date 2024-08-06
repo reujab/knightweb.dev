@@ -1,7 +1,0 @@
-Package: knightweb.dev
-Version: 0.0.0-1
-Section: httpd
-Priority: optional
-Architecture: all
-Maintainer: Christopher Knight <reujab@gmail.com>
-Description: https://knightweb.dev/
