@@ -2,8 +2,8 @@
 title: "Emulating Raspberry Pi OS"
 author: "Christopher Knight"
 date: 4 August 2024
-updated: 5 August 2024
-notes: Formatting
+updated: 6 August 2024
+notes: Download links
 description: Learn how to emulate a Raspberry Pi (32 or 64-bit) with graphics support using QEMU by
   creating an initrd that loads virtio_gpu.
 bibliography: refs.bib
@@ -64,6 +64,13 @@ alias q32='qemu-system-arm -M virt -cpu cortex-a15 -smp $(nproc) -m 2G -netdev u
 - `-smp $(nproc)` uses the maximum number of threads
 - `-m 2G` allocates 2 GB of virtual RAM
 - `-netdev ... -device virtio-net-device...` enables network support
+
+## Downloads
+
+If you're not the DIY type, you can download my kernel and skip to [Resizing the Raspberry Pi image](#resizing-the-raspberry-pi-image-optional):
+
+- [arm64 kernel](/downloads/vmlinuz-6.1.0-23-arm64) and [initrd](/downloads/initrd.img-6.1.0-23-arm64)
+- [armmp-lpae kernel](/downloads/vmlinuz-6.1.0-23-armmp-lpae) and [initrd](/downloads/initrd.img-6.1.0-23-armmp-lpae)
 
 ## Installing Debian
 
