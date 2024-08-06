@@ -1,13 +1,16 @@
-// Adapted from github.com/jasonm23/markdown-css-themes
-
-$black: #444
-$white: #fefefe
+$bg-light: #fefefe
+$bg-dark: #181a1b
+$text-light: #444
+$text-dark: #eee
 // Ref: github.com
-$code_bg: #f6f8fa
+$bg-code-light: #f6f8fa
+$bg-code-dark: #1c1e1f
+$border-light: #ddd
+$border-dark: #333
 
 html
-	background: $white
-	color: $black
+	background: $bg-light
+	color: $text-light
 	font-family: Georgia, Palatino Linotype, serif
 	font-size: 12pt
 	line-height: 1.5
@@ -17,6 +20,10 @@ body
 	margin: auto
 	max-width: 50em
 	padding: 1em
+
+// I'm less likely to click a purple link.
+.home:visited:not(:active)
+	color: blue
 
 .info
 	margin-top: -1em
@@ -28,7 +35,7 @@ sup
 	line-height: 0
 
 .sourceCode, code, kbd
-	background-color: $code_bg
+	background-color: $bg-code-light
 	font-family: Consolas, Fira Mono, FiraMono Nerd Font Mono, Source Code Pro, Noto Sans Mono, Liberation Mono, monospace
 
 pre
@@ -37,15 +44,31 @@ pre
 	display: inline-block
 
 kbd
-	border: 1px solid #ddd
+	border: 1px solid $border-light
 	border-radius: 5px
 	padding: 1px 2px
 	font-size: 11pt
 
 	// A box shadow is used to avoid increasing the element size.
 	// Ref: github.com
-	box-shadow: #ddd 0 -1px inset
+	box-shadow: $border-light 0 -1px inset
 
 .hanging-indent
 	padding-left: 2em
 	text-indent: -2em
+
+@media (prefers-color-scheme: dark)
+	html
+		background: $bg-dark
+		color: $text-dark
+
+	a
+		// Override home.
+		color: #3391ff !important
+
+	.sourceCode, code, kbd
+		background-color: $bg-code-dark
+
+	kbd
+		border-color: $border-dark
+		box-shadow: $border-dark 0 -1px inset
