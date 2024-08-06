@@ -1,0 +1,51 @@
+// Adapted from github.com/jasonm23/markdown-css-themes
+
+$black: #444
+$white: #fefefe
+// Ref: github.com
+$code_bg: #f6f8fa
+
+html
+	background: $white
+	color: $black
+	font-family: Georgia, Palatino Linotype, serif
+	font-size: 12pt
+	line-height: 1.5
+	scroll-behavior: smooth
+
+body
+	margin: auto
+	max-width: 50em
+	padding: 1em
+
+.info
+	margin-top: -1em
+
+img
+	max-width: 100%
+
+sup
+	line-height: 0
+
+.sourceCode, code, kbd
+	background-color: $code_bg
+	font-family: Consolas, Fira Mono, FiraMono Nerd Font Mono, Source Code Pro, Noto Sans Mono, Liberation Mono, monospace
+
+pre
+	margin: 1em !important
+	// This makes the margin visible inside a scrollable container.
+	display: inline-block
+
+kbd
+	border: 1px solid #ddd
+	border-radius: 5px
+	padding: 1px 2px
+	font-size: 11pt
+
+	// A box shadow is used to avoid increasing the element size.
+	// Ref: github.com
+	box-shadow: #ddd 0 -1px inset
+
+.hanging-indent
+	padding-left: 2em
+	text-indent: -2em

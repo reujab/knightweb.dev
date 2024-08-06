@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	$head.html()$
+	<style>$highlighting-css$</style>
+</head>
+<body>
+	<a href="/">&larr; Go home</a>
+
+	<h1>$title$</h1>
+
+	$if(author)$
+		<p class="info">
+			By $author$
+
+			$if(date)$
+				on $date$
+			$endif$
+
+			$if(updated)$
+				<br/>Updated on $updated$
+
+				$if(notes)$
+					&mdash; $notes$
+				$endif$
+			$endif$
+		</p>
+	$endif$
+
+	<hr/>
+
+	$body$
+</body>
+</html>
