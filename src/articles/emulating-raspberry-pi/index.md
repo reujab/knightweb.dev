@@ -14,10 +14,10 @@ I'd like to share my technique on emulating a Raspberry Pi OS image, which invol
 This technique:
 
 - Does not require access to a Raspberry Pi
-- Does not modify the image[^1].
+- Does not modify the image[^1]
 - Does not emulate Raspberry Pi hardware
 - Allows GPU emulation
-- Works for a backup image or an image downloaded from [here](https://www.raspberrypi.com/software/operating-systems/).
+- Works for a backup image or an image downloaded from [here](https://www.raspberrypi.com/software/operating-systems/)
 
 You will learn:
 
