@@ -54,8 +54,14 @@ kbd
 	box-shadow: $border-light 0 -1px inset
 
 .hanging-indent
-	padding-left: 2em
+	margin-left: 2em
 	text-indent: -2em
+
+	// Realistically, the only words that need to be broken are URLs.
+	// This helps with long URLs on WebKit-based mobile browsers.
+	// Seems to only be required on Android's Chrome.
+	a
+		overflow-wrap: break-word
 
 @media (prefers-color-scheme: dark)
 	html
@@ -72,3 +78,7 @@ kbd
 	kbd
 		border-color: $border-dark
 		box-shadow: $border-dark 0 -1px inset
+
+@media print
+	.nav
+		display: none
