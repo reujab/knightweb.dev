@@ -11,6 +11,7 @@ help() {
 	echo "  -h, --help"
 	echo "  -d, --make-deb"
 	echo "      --minify-args=<args>"
+	echo "      --no-dark-theme"
 	echo "      --no-minify"
 	echo "      --pandoc-args=<args>"
 	echo "  -w, --watch"
@@ -29,6 +30,7 @@ rename() {
 }
 
 init() {
+	start=$EPOCHREALTIME
 	pandoc_args+=(-C --toc=false --table-of-contents=false --wrap=none)
 	for filter in filters/*.lua; do
 		pandoc_args+=(--lua-filter="$filter")
@@ -38,15 +40,7 @@ init() {
 	cd "$(dirname "$0")"
 	website=
 
-	rsync -a --delete --exclude={"*.bib","*.md","*.sass"} src/ dist/
-
-	trap cleanup EXIT
-}
-
-cleanup() {
-	code=$?
-	pkill --parent $$ || true
-	exit $code
+	rsync -a --delete --exclude={"*.bib","*.md","*.sass"} src/ static/ dist/
 }
 
 build-markdown() {
@@ -95,10 +89,12 @@ get-highlighting-css() {
 	md=$'```sh\n```'
 	pandoc "${args[@]}" <(echo "$md") |
 	sed -e '/^pre\.numberSource.*$/,/^.*}.*/d' -e 's/^code span//'
-	echo "@media (prefers-color-scheme: dark) {"
-	pandoc "${args[@]}" --highlight-style=themes/dark.theme <(echo "$md") |
-	grep "^code span" | sed 's/^code span//'
-	echo "}"
+	if ((dark_theme)); then
+		echo "@media (prefers-color-scheme: dark) {"
+		pandoc "${args[@]}" --highlight-style=themes/dark.theme <(echo "$md") |
+		grep '^code span\.' | sed 's/^code span//'
+		echo "}"
+	fi
 }
 
 make-deb() {
@@ -121,33 +117,42 @@ EOF
 }
 
 watch() {
+	$0 "$@"
+
+	miniserve -q --index=index.html dist &
+
 	local pid=
 	while read -r; do
 		if [[ $pid && -d /proc/$pid ]]; then
 			if [[ $(ps -ho comm --ppid $pid) != sleep ]]; then
 				echo Aborting
 			fi
-			kill -TERM "$pid"
+			kill "$pid"
 		fi
 		(
 			sleep 0.5
 			echo Recompiling...
-			start=$EPOCHREALTIME
 			$0 "$@" || {
 				echo Exit code $? >&2
-				exit 1
 			}
-			echo "Done in $(bc <<< "scale=2; ($EPOCHREALTIME - $start)/1")s"
 		) & pid=$!
-	done < <(inotifywait -mr -e{modify,close_write,move{,_self},delete{,_self}} filters src templates themes)
+	done < <(inotifywait -mr -e{modify,close_write,move{,_self},delete{,_self}} filters src static templates themes)
 }
 
+cleanup() {
+	code=$?
+	pkill --parent $$ || true
+	exit $code
+}
+trap cleanup EXIT
+
+dark_theme=1
 debug=0
 force_template=
 make_deb=0
 minify=1
 minify_args=()
-opts=$(getopt -n "$0" -o xhdw -l deb-http-root:,debug,help,force-template:,make-deb,minify-args:,no-minify,pandoc-args:,watch -- "$@") || {
+opts=$(getopt -n "$0" -o xhdw -l deb-http-root:,debug,help,force-template:,make-deb,minify-args:,no-dark-theme,no-minify,pandoc-args:,watch -- "$@") || {
 	echo
 	help
 	exit 1
@@ -177,6 +182,9 @@ while (($#)); do
 	--minify-args)
 		minify_args=($2)
 		shift
+		;;
+	--no-dark-theme)
+		dark_theme=0
 		;;
 	--no-minify)
 	 	minify=0
@@ -217,3 +225,5 @@ build-highlighting-css
 
 if ((!debug)); then wait "${jobs[@]}"; fi
 if ((make_deb)); then make-deb; fi
+
+echo "Done in $(bc <<< "scale=2; ($EPOCHREALTIME - $start)/1")s"
