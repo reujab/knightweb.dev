@@ -13,6 +13,7 @@ help() {
 	echo "      --minify-args=<args>"
 	echo "      --no-minify"
 	echo "      --pandoc-args=<args>"
+	echo "  -w, --watch"
 }
 
 _minify() { if ((minify)); then minify "$@" "${minify_args[@]}"; else cat; fi }
@@ -38,25 +39,31 @@ init() {
 	website=
 
 	rsync -a --delete --exclude={"*.bib","*.md","*.sass"} src/ dist/
+
+	trap cleanup EXIT
+}
+
+cleanup() {
+	code=$?
+	pkill --parent $$ || true
+	exit $code
 }
 
 build-markdown() {
-	local file args template out
-	for file in src/**/*.md; do
-		args=("${pandoc_args[@]}" --resource-path="$(dirname "$file")" "$file")
-		template=$(get-template "$file")
-		args+=(--template="templates/$template")
+	local args template out
+	args=("${pandoc_args[@]}" --resource-path="$(dirname "$1")" "$1")
+	template=$(get-template "$1")
+	args+=(--template="templates/$template")
 
-		out=$(rename "$file" .md .html)
-		pandoc "${args[@]}" |
-		sed -r 's/<a href="#cb[0-9]+-[0-9]+" aria-hidden="true" tabindex="-1"><\/a>| id="cb[0-9]+(-[0-9]+)?"//g' |
-		_minify --type html > "$out" & jobs+=($!)
-		((debug)) && wait
-	done
+	out=$(rename "$1" .md .html)
+	pandoc "${args[@]}" |
+	sed -r 's/<a href="#cb[0-9]+-[0-9]+" aria-hidden="true" tabindex="-1"><\/a>| id="cb[0-9]+(-[0-9]+)?"//g' |
+	_minify --type html > "$out"
+	if ((debug)); then wait; fi
 }
 
 get-template() {
-	[[ $force_template ]] && return "$force_template"
+	if [[ $force_template ]]; then echo "$force_template"; return; fi
 
 	local file base
 	file=$(readlink -f "$1")
@@ -69,17 +76,14 @@ get-template() {
 
 		file=$(dirname "$file")
 	done
-	echo "Warning: template not found for $1" >&2
 	echo default
 }
 
 build-sass() {
-	local file out
-	for file in **/*.sass; do
-		out=$(rename "$file" .sass .css)
-		sassc -a "$file" | _minify --type css > "$out" & jobs+=($!)
-		((debug)) && wait
-	done
+	local out
+	out=$(rename "$1" .sass .css)
+	sassc -a "$1" | _minify --type css > "$out"
+	if ((debug)); then wait; fi
 }
 
 build-highlighting-css() {
@@ -116,12 +120,34 @@ EOF
 	dpkg-deb --build "$tmp" "$prev_wd"
 }
 
+watch() {
+	local pid=
+	while read -r; do
+		if [[ $pid && -d /proc/$pid ]]; then
+			if [[ $(ps -ho comm --ppid $pid) != sleep ]]; then
+				echo Aborting
+			fi
+			kill -TERM "$pid"
+		fi
+		(
+			sleep 0.5
+			echo Recompiling...
+			start=$EPOCHREALTIME
+			$0 "$@" || {
+				echo Exit code $? >&2
+				exit 1
+			}
+			echo "Done in $(bc <<< "scale=2; ($EPOCHREALTIME - $start)/1")s"
+		) & pid=$!
+	done < <(inotifywait -mr -e{modify,close_write,move{,_self},delete{,_self}} filters src templates themes)
+}
+
 debug=0
 force_template=
 make_deb=0
 minify=1
 minify_args=()
-opts=$(getopt -n "$0" -o xhd -l deb-http-root:,debug,help,force-template:,make-deb,minify-args:,no-minify,pandoc-args: -- "$@") || {
+opts=$(getopt -n "$0" -o xhdw -l deb-http-root:,debug,help,force-template:,make-deb,minify-args:,no-minify,pandoc-args:,watch -- "$@") || {
 	echo
 	help
 	exit 1
@@ -160,6 +186,11 @@ while (($#)); do
 		echo "${pandoc_args[@]}"
 		shift
 		;;
+	-w|--watch)
+		shift
+		watch "$@"
+		exit
+		;;
 	--);;
 	*)
 		echo "Extra parameter: $1" >&2
@@ -171,11 +202,18 @@ while (($#)); do
 done
 
 init
-build-markdown
-build-sass
+
+for file in src/**/*.md; do
+	build-markdown "$file" & jobs+=($!)
+	if ((debug)); then wait; fi
+done
+
+for file in **/*.sass; do
+	build-sass "$file" & jobs+=($!)
+	if ((debug)); then wait; fi
+done
+
 build-highlighting-css
 
-((!debug)) && wait "${jobs[@]}"
-
-((make_deb)) && make-deb
-exit 0
+if ((!debug)); then wait "${jobs[@]}"; fi
+if ((make_deb)); then make-deb; fi
