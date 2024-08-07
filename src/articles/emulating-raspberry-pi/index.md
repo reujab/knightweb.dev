@@ -19,15 +19,13 @@ This technique:
 - Allows GPU emulation
 - Works for a backup image or an image downloaded from [here](https://www.raspberrypi.com/software/operating-systems/)
 
+[^1]: Any changes you make in the guest VM will reflect to the .img file. Copy it to preserve the original.
+
 You will learn:
 
 1. How to install Debian (32 or 64-bit arm)
 2. How to modify the initrd to include virtio_gpu and other modules
 3. How to boot an unmodified Raspberry Pi image using the modified initrd
-
-If you are emulating a Raspberry Pi 4 or later, follow the 64-bit instructions. For older targets, follow the 32-bit instructions.
-
-[^1]: Any changes you make in the guest VM will reflect to the .img file. Copy it to preserve the original.
 
 ## Setup
 
