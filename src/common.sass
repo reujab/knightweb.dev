@@ -80,5 +80,8 @@ kbd
 		box-shadow: $border-dark 0 -1px inset
 
 @media print
-	.nav
+	.nav, a[href^=fr-]
 		display: none
+
+	a[href^=\#]
+		color: $text-light
