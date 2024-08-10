@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{ section.title }}</title>
+{% endblock %}
+
+{% block body %}
+<h1>{{ section.title }}</h1>
+{{ section.content | safe }}
+
+<h2>Articles</h2>
+{% set articles = get_section(path="articles/_index.md") %}
+{% for article in articles.pages %}
+<h3>{{ article.title }}</h3>
+{{ article.summary | safe }}
+...
+<p><a href="{{ article.path | safe }}">Continue reading &rarr;</a></p>
+{% endfor %}
+<p><a href="/articles/">Archive</a></p>
+{% endblock %}

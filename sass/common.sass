@@ -1,10 +1,13 @@
+@use "../static/highlighting.css"
+
 $bg-light: #fefefe
 $bg-dark: #181a1b
 $text-light: #444
 $text-dark: #eee
-// Ref: github.com
-$bg-code-light: #f6f8fa
-$bg-code-dark: #1c1e1f
+$link-dark: #3391ff
+$link-visited-dark: #be7df8
+$bg-code-light: #f9f9f9
+$bg-code-dark: #282a36
 $border-light: #ddd
 $border-dark: #333
 
@@ -34,27 +37,36 @@ img
 sup
 	line-height: 0
 
-.sourceCode, code, kbd
-	background-color: $bg-code-light
-	font-family: Consolas, Fira Mono, FiraMono Nerd Font Mono, Source Code Pro, Noto Sans Mono, Liberation Mono, monospace
-
 pre
-	margin: 1em !important
-	// This makes the margin visible inside a scrollable container.
-	display: inline-block
+	border-radius: 0.75em
+	overflow: auto
+
+	> code
+		display: inline-block
+		margin: 1em
+
+	code
+		border-radius: 0
+		padding: 0
+
+code
+	background-color: $bg-code-light
+	border-radius: 5px
+	font-family: Consolas, Fira Mono, FiraMono Nerd Font Mono, Source Code Pro, Liberation Mono, monospace
+	padding: 3px
 
 kbd
-	border: 1px solid $border-light
 	border-radius: 5px
-	padding: 1px 2px
+	border: 1px solid $border-light
 	font-size: 11pt
+	padding: 1px 2px
 
 	// A box shadow is used to avoid increasing the element size.
 	// Ref: github.com
 	box-shadow: $border-light 0 -1px inset
 
-.hanging-indent
-	margin-left: 2em
+#references + ul
+	list-style-type: none
 	text-indent: -2em
 
 	// Realistically, the only words that need to be broken are URLs.
@@ -70,18 +82,21 @@ kbd
 
 	a
 		// Override home.
-		color: #3391ff !important
+		color: $link-dark !important
 
-	.sourceCode, code, kbd
+		&:visited
+			color: $link-visited-dark !important
+
+	code
 		background-color: $bg-code-dark
 
 	kbd
 		border-color: $border-dark
 		box-shadow: $border-dark 0 -1px inset
 
-@media print
-	.nav, a[href^=fr-]
-		display: none
+	.z-function-call
+		color: $text-dark !important
 
-	a[href^=\#]
-		color: $text-light
+@media print
+	.nav, a[href^="#fr-"]
+		display: none

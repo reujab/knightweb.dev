@@ -1,12 +1,13 @@
 ---
-title: "Emulating Raspberry Pi OS"
-author: "Christopher Knight"
-date: 4 August 2024
-updated: 6 August 2024
+title: Emulating Raspberry Pi OS
+authors: [Christopher Knight]
+date: 2024-08-04
+updated: 2024-08-06
 notes: Download links
 description: Learn how to emulate a Raspberry Pi (32 or 64-bit) with graphics support using QEMU by
   creating an initrd that loads virtio_gpu.
-bibliography: refs.bib
+extra:
+  notes: Download links
 ---
 
 I'd like to share my technique on emulating a Raspberry Pi OS image, which involves creating an initrd that loads virtio_gpu, allowing graphical emulation with QEMU.
@@ -17,7 +18,7 @@ This technique:
 - Does not modify the image[^1]
 - Does not emulate Raspberry Pi hardware
 - Allows GPU emulation
-- Works for a backup image or an image downloaded from [here](https://www.raspberrypi.com/software/operating-systems/)
+- Works for a backup image or an image downloaded from [the Raspberry Pi website](https://www.raspberrypi.com/software/operating-systems/)
 
 [^1]: Any changes you make in the guest VM will reflect to the .img file. Copy it to preserve the original.
 
@@ -27,6 +28,8 @@ You will learn:
 2. How to modify the initrd to include virtio_gpu and other modules
 3. How to boot an unmodified Raspberry Pi image using the modified initrd
 
+<!-- more -->
+
 ## Setup
 
 ### 64-bit
@@ -35,7 +38,7 @@ You will learn:
 sudo apt install qemu-system-aarch64 qemu-efi-aarch64
 ```
 
-If you are not using Debian, you can download the EFI firmware [here](https://packages.debian.org/sid/all/qemu-efi-aarch64/download).
+If you are not using Debian, you can download the EFI firmware from [packages.debian.org](https://packages.debian.org/sid/all/qemu-efi-aarch64/download).
 
 ```bash
 alias q64='qemu-system-aarch64 -M virt -cpu cortex-a72 -smp $(nproc) -m 2G -device usb-ehci -device usb-kbd -device virtio-gpu-pci'
@@ -63,7 +66,7 @@ alias q32='qemu-system-arm -M virt -cpu cortex-a15 -smp $(nproc) -m 2G -netdev u
 - `-m 2G` allocates 2 GB of virtual RAM
 - `-netdev ... -device virtio-net-device...` enables network support
 
-## Downloads
+## Downloads (optional)
 
 If you're not the DIY type, you can download my kernel and skip to [Resizing the Raspberry Pi image](#resizing-the-raspberry-pi-image-optional):
 
@@ -72,7 +75,7 @@ If you're not the DIY type, you can download my kernel and skip to [Resizing the
 
 ## Installing Debian
 
-You cannot boot the Raspberry Pi's kernel and initrd with QEMU, so you have to build your own that play nice with QEMU. [@raspi4; @so] To do this, you will be installing Debian arm in a virtual machine.
+You cannot boot the Raspberry Pi's kernel and initrd with QEMU, so you have to build your own that play nice with QEMU. (Wim 2023a, 2023b) To do this, you will be installing Debian arm in a virtual machine.
 
 Create the image to which you will install Debian:
 
@@ -82,7 +85,7 @@ qemu-img create debian.img 4G
 
 ### 64-bit
 
-Download [Debian arm64](https://cdimage.debian.org/cdimage/release/current/arm64/iso-cd/). EFI targets are the easiest to emulate, all you have to do is provide a firmware file. [@debian64]
+Download [Debian arm64](https://cdimage.debian.org/cdimage/release/current/arm64/iso-cd/). EFI targets are the easiest to emulate, all you have to do is provide a firmware file. (wookey, et al. 2023)
 
 ```bash
 q64 -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
@@ -108,7 +111,7 @@ q32 -drive format=raw,file=debian.img,if=none,id=hd0 \
 	-nographic -serial mon:stdio
 ```
 
-Adapted from "Run ARM/MIPS Debian on QEMU" [@debian32].
+Adapted from "Run ARM/MIPS Debian on QEMU" (Lazymio 2021).
 
 Install Debian and reboot. It will reboot back into the installer; to exit, press <kbd>Ctrl+a</kbd> <kbd>x</kbd>. To boot into the new system, you will have to change the kernel and initrd.
 
@@ -201,7 +204,7 @@ q32 -drive format=raw,file=raspi.img,if=none,id=hd0 \
 
 Congratulations, you're emulating Raspberry Pi OS with graphics support.
 
-![VM screenshot](vm_screenshot.png) \
+![VM screenshot](vm_screenshot.png)
 
 ## Cleanup
 
@@ -228,3 +231,8 @@ sudo losetup -d $rpi_loop
 Reboot into the image, where you will now have access to the emergency shell and can troubleshoot what failed with `systemctl --failed`. To enable network access in the emergency shell, run `ip link set enp0s1 up && dhclient enp0s1`.
 
 # References
+
+- Lazymio. 2021. "Run ARM/MIPS Debian on QEMU." <https://blog.lazym.io/2021/04/16/Run-ARM-MIPS-Debian-on-QEMU/>.
+- Wim. 2023a. "Raspberry Pi 4 Emulation with QEMU Virt." <https://blog.grandtrunk.net/2023/03/raspberry-pi-4-emulation-with-qemu/>.
+- Wim. 2023b. StackExchange. <https://raspberrypi.stackexchange.com/a/142609>.
+- wookey, PaulWise, et al. 2023. "Arm64Qemu." Debian Wiki. <https://wiki.debian.org/Arm64Qemu>.
