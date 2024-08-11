@@ -17,7 +17,7 @@
 <article>
 	<h1>{{ page.title }}</h1>
 
-	<p class="info">
+	<aside class="info">
 		By {{ page.authors | join(sep=", ") }} on {{ page.date | date(format="%B %-d, %Y") }}
 
 		{% if page.updated %}
@@ -26,13 +26,11 @@
 
 			&mdash; {{ page.extra.notes | safe }}
 		{% endif %}
-	</p>
 
-	<p>
-		Read time: {{ page.reading_time }} minutes
-	</p>
+		<p>Read time: {{ page.reading_time }} minutes</p>
 
-	<hr/>
+		<hr/>
+	</aside>
 
 	{{ page.content | safe }}
 </article>
