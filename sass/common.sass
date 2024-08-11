@@ -24,10 +24,6 @@ body
 	max-width: 50em
 	padding: 1em
 
-// I'm less likely to click a purple link.
-.home:visited:not(:active)
-	color: blue
-
 .info
 	margin-top: -1em
 
@@ -75,17 +71,24 @@ kbd
 	a
 		overflow-wrap: break-word
 
+@media (prefers-color-scheme: light)
+	// I'm less likely to click a purple link.
+	.nav:not(:active)
+		color: blue
+
 @media (prefers-color-scheme: dark)
 	html
 		background: $bg-dark
 		color: $text-dark
 
-	a
-		// Override home.
-		color: $link-dark !important
+	.nav:not(:active)
+		color: $link-dark
 
-		&:visited
-			color: $link-visited-dark !important
+	a
+		color: $link-dark
+
+		&:active, &:visited
+			color: $link-visited-dark
 
 	code
 		background-color: $bg-code-dark
@@ -98,5 +101,11 @@ kbd
 		color: $text-dark !important
 
 @media print
+	a
+		color: blue
+
+	a[href^="#"], a[href^="/"]
+		color: black
+
 	.nav, a[href^="#fr-"]
 		display: none
