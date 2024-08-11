@@ -2,12 +2,11 @@
 title: Emulating Raspberry Pi OS
 authors: [Christopher Knight]
 date: 2024-08-04
-updated: 2024-08-06
-notes: Download links
+updated: 2024-08-11
 description: Learn how to emulate a Raspberry Pi (32 or 64-bit) with graphics support using QEMU by
   creating an initrd that loads virtio_gpu.
 extra:
-  notes: Download links
+  notes: Fixed resizing instructions overwriting <code>$loop</code>
 ---
 
 I'd like to share my technique on emulating a Raspberry Pi OS image, which involves creating an initrd that loads virtio_gpu, allowing graphical emulation with QEMU.
@@ -172,9 +171,9 @@ If you downloaded an image file from the Raspberry Pi website, you should expand
 ```bash
 fallocate -l8G raspi.img
 parted raspi.img resizepart 2 100%
-loop=$(sudo losetup -fP --show raspi.img)
-sudo resize2fs ${loop}p2
-sudo losetup -d $loop
+rpi_loop=$(sudo losetup -fP --show raspi.img)
+sudo resize2fs ${rpi_loop}p2
+sudo losetup -d $rpi_loop
 ```
 
 ## Booting the Raspberry Pi image
