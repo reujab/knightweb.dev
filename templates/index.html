@@ -2,6 +2,8 @@
 
 {% block head %}
 <title>{{ section.title }}</title>
+
+<meta name="description" content="{{ section.description }}">
 {% endblock %}
 
 {% block body %}
@@ -11,10 +13,12 @@
 <h2>Articles</h2>
 {% set articles = get_section(path="articles/_index.md") %}
 {% for article in articles.pages %}
-<h3>{{ article.title }}</h3>
-{{ article.summary | safe }}
-...
-<p><a href="{{ article.path | safe }}">Continue reading &rarr;</a></p>
+<article>
+	<h3>{{ article.title }}</h3>
+	{{ article.summary | safe }}
+	...
+	<p><a href="{{ article.path | safe }}">Continue reading &rarr;</a></p>
+</article>
 {% endfor %}
-<p><a href="/articles/">Archive</a></p>
+<p><a href="/articles/" class="nav">Archive</a></p>
 {% endblock %}
