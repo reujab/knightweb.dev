@@ -14,7 +14,7 @@
 {% set articles = get_section(path="articles/_index.md") %}
 {% for article in articles.pages %}
 <article>
-	<h3>{{ article.title }}</h3>
+	<h3><a href="{{ article.path | safe }}" class="implicit-link">{{ article.title }}</a></h3>
 	{{ article.summary | safe }}
 	...
 	<p><a href="{{ article.path | safe }}">Continue reading &rarr;</a></p>

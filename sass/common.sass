@@ -30,6 +30,10 @@ body
 img
 	max-width: 100%
 
+.implicit-link
+	color: $text-light
+	text-decoration: none
+
 sup
 	line-height: 0
 
@@ -89,6 +93,12 @@ kbd
 
 		&:active, &:visited
 			color: $link-visited-dark
+
+	a.implicit-link
+		color: $text-dark
+
+		&:hover
+			text-decoration: underline
 
 	code
 		background-color: $bg-code-dark
