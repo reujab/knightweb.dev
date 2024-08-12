@@ -6,6 +6,7 @@
 
 	{% block head %}{% endblock %}
 
+	<link rel="stylesheet" href="/common.css?ts={{ now() | date(format="%s") }}" />
 	<link rel="stylesheet" href="/highlighting-light.css" media="(prefers-color-scheme: light)">
 	<link rel="stylesheet" href="/highlighting-dark.css" media="(prefers-color-scheme: dark)">
 
