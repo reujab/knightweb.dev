@@ -1,0 +1,33 @@
+@import "fontawesome";
+
+@media not print {
+	// Decorative styles that should not be applied while printing
+
+	a[target="_blank"]:not(.project, .implicit-link):after,
+	.fa-new-tab {
+		// Ref: https://stackoverflow.com/questions/21509982/change-svg-fill-color-in-before-or-after-css
+		mask: $fa-arrow-up-right-from-square-solid;
+		content: "";
+		display: inline-block;
+		width: 0.75em;
+		height: 0.75em;
+		margin-left: 0.3em;
+		background-color: currentColor;
+	}
+}
+
+@media print {
+	a {
+		color: blue;
+	}
+
+	a[href^="#"],
+	a[href^="/"] {
+		color: black;
+	}
+
+	.nav,
+	a[href^="#fr-"] {
+		display: none;
+	}
+}

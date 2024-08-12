@@ -1,0 +1,6 @@
+@media (prefers-color-scheme: light) {
+	// I'm less likely to click a purple link.
+	.nav:not(:active) {
+		color: blue;
+	}
+}

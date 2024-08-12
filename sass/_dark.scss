@@ -1,0 +1,52 @@
+@import "variables";
+
+@media (prefers-color-scheme: dark) {
+	html {
+		background: $bg-dark;
+		color: $text-dark;
+	}
+
+	a {
+		color: $link-dark;
+
+		&:active,
+		&:visited {
+			color: $link-visited-dark;
+		}
+	}
+
+	code {
+		background-color: $bg-code-dark;
+	}
+
+	kbd {
+		border-color: $border-dark;
+		box-shadow: $border-dark 0 -1px inset;
+	}
+
+	.nav:not(:active) {
+		color: $link-dark;
+	}
+
+	a.implicit-link {
+		color: $text-dark;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.z-function-call {
+		color: $text-dark !important;
+	}
+
+	// Home
+	a.project {
+		color: $text-dark;
+
+		&:active,
+		&:hover {
+			background-color: rgba($bg-light, 0.05);
+		}
+	}
+}

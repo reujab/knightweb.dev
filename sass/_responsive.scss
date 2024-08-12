@@ -1,0 +1,8 @@
+@import "variables";
+
+@media (max-width: $page-width) {
+	// Home
+	.projects {
+		grid-template-columns: 1fr;
+	}
+}

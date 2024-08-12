@@ -1,0 +1,33 @@
+@import "variables";
+
+.skip-to-content {
+	left: 0;
+	position: absolute;
+	top: -2em;
+
+	&:focus {
+		top: 0;
+	}
+}
+
+.info {
+	p {
+		margin: 0.5em 0;
+	}
+
+	hr {
+		margin: 1rem 0;
+	}
+}
+
+#references + ul {
+	list-style-type: none;
+	text-indent: -2em;
+
+	// Realistically, the only words that need to be broken are URLs.
+	// This helps with long URLs on WebKit-based mobile browsers.
+	// Seems to only be required on Android's Chrome.
+	a {
+		overflow-wrap: break-word;
+	}
+}

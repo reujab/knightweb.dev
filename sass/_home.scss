@@ -1,0 +1,29 @@
+@import "variables";
+
+h1.home {
+	margin-bottom: 0;
+}
+
+.projects {
+	display: grid;
+	gap: 1em;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.project {
+	border-radius: 1em;
+	color: $text-light;
+	padding: 1em;
+	text-decoration: none;
+	transition: background-color 200ms ease;
+
+	&:active,
+	&:hover,
+	&:focus {
+		background-color: rgba($bg-dark, 0.05);
+	}
+}
+
+.project-name {
+	font-size: 1.5em;
+}
