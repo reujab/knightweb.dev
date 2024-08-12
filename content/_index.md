@@ -1,5 +1,5 @@
 ---
-title: My linux blog
+title: Chris's website
 description: Welcome to my website, where I share my open source projects and knowledge of Linux.
 ---
 

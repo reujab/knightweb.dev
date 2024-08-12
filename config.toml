@@ -12,7 +12,7 @@ highlight_theme = "css"
 smart_punctuation = true
 
 highlight_themes_css = [
-  { theme = "demain", filename = "highlighting.css" },
+  { theme = "demain", filename = "highlighting-light.css" },
   { theme = "dracula", filename = "highlighting-dark.css" },
 ]
 

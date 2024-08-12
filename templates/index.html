@@ -8,7 +8,8 @@
 
 {% block body %}
 <!-- Introduction -->
-<h1>{{ section.title }}</h1>
+<h1 class="home">Christopher Knight&rsquo;s</h1>
+<sup>Personal website</sup>
 
 {{ section.content | safe }}
 
@@ -17,11 +18,9 @@
 <h2><a href="https://github.com/reujab" class="implicit-link" target="_blank">Projects</a></h2>
 <div class="projects">
 	{% for project in projects %}
-	<a href="https://github.com/{{ project.repo }}" target="_blank">
-		<div class="project">
-			<div class="project-name">{{ project.name }}</div>
-			<div class="project-description">{{ project.description }}</div>
-		</div>
+	<a href="https://github.com/{{ project.repo }}" class="project" target="_blank">
+		<div class="project-name">{{ project.name }}<span class="fa-new-tab"></span></div>
+		<div class="project-description">{{ project.description }}</div>
 	</a>
 	{% endfor %}
 </div>
