@@ -203,7 +203,7 @@ q32 -drive format=raw,file=raspi.img,if=none,id=hd0 \
 
 Congratulations, you're emulating Raspberry Pi OS with graphics support.
 
-![VM screenshot](vm_screenshot.png)
+{{ lazy_img(alt="VM screenshot", src="vm_screenshot.png") }}
 
 ## Cleanup
 
