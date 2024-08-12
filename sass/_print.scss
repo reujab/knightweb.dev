@@ -4,7 +4,7 @@
 	// Decorative styles that should not be applied while printing
 
 	a[target="_blank"]:not(.project, .implicit-link):after,
-	.fa-new-tab {
+	.project-name:after {
 		// Ref: https://stackoverflow.com/questions/21509982/change-svg-fill-color-in-before-or-after-css
 		mask: $fa-arrow-up-right-from-square-solid;
 		content: "";

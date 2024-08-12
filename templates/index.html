@@ -19,7 +19,7 @@
 <div class="projects">
 	{% for project in projects %}
 	<a href="https://github.com/{{ project.repo }}" class="project" target="_blank">
-		<div class="project-name">{{ project.name }}<span class="fa-new-tab"></span></div>
+		<div class="project-name">{{ project.name }}</div>
 		<div class="project-description">{{ project.description }}</div>
 	</a>
 	{% endfor %}
