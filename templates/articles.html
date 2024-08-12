@@ -9,9 +9,17 @@
 
 <h1>{{ section.title }}</h1>
 
+{% for year, articles in section.pages | group_by(attribute="year") %}
+<h2>{{ year }}</h2>
+
+{% for month, articles in articles | group_by(attribute="month") %}
+<h3>{{ articles[0].date | date(format="%B") }}</h3>
+
 <ul>
-	{% for page in section.pages %}
+	{% for page in articles %}
 	<li><a href="{{ page.slug | safe }}/">{{ page.title }}</a><br />{{ page.description }}</li>
 	{% endfor %}
 </ul>
+{% endfor %}
+{% endfor %}
 {% endblock %}
