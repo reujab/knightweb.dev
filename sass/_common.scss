@@ -69,4 +69,8 @@ kbd {
 .implicit-link {
 	color: $text-light;
 	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
