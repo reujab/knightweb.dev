@@ -1,0 +1,18 @@
+- name: silver
+  description: Fast, customizable, cross-shell prompt
+  repo: reujab/silver
+- name: wallpaper
+  description: Cross-platform Golang library for manipulating desktop wallpapers
+  repo: reujab/wallpaper
+- name: wallpaper.rs
+  description: Rust port of wallpaper
+  repo: reujab/wallpaper.rs
+- name: linksys
+  description: Golang library for interacting with Linksys routers
+  repo: reujab/linksys
+- name: Atlas
+  description: TV box for embedded Linux
+  repo: reujab/atlas
+- name: More
+  description: Check out my GitHub
+  repo: reujab
