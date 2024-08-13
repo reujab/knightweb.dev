@@ -11,9 +11,11 @@
 
 {% block body %}
 <a href="#main" class="skip-to-content">Skip to content</a>
-<a href="/" class="nav">&larr; Go home</a>
-|
-<a href="/articles/" class="nav">Archive</a>
+<div class="nav">
+	<a href="/">&larr; Go home</a>
+	|
+	<a href="/articles/">Archive</a>
+</div>
 
 <article>
 	<h1>{{ page.title }}</h1>
@@ -39,5 +41,7 @@
 	</main>
 </article>
 
-<a href="#top" class="nav top">&uparrow; Back to top</a>
+<div class="nav">
+	<a href="#top">&uparrow; Back to top</a>
+</div>
 {% endblock %}

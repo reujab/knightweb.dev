@@ -24,7 +24,7 @@
 		box-shadow: $border-dark 0 -1px inset;
 	}
 
-	.nav:not(:active) {
+	.nav > a:not(:active) {
 		color: $link-dark;
 	}
 
