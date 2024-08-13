@@ -3,7 +3,7 @@ title: Emulating Raspberry Pi OS
 authors: [Christopher Knight]
 date: 2024-08-04
 updated: 2024-08-11
-description: Learn how to emulate a Raspberry Pi (32 or 64-bit) with graphics support using QEMU by
+description: Learn how to emulate a Raspberry Pi (32- or 64-bit) with graphics support using QEMU by
   creating an initrd that loads virtio_gpu.
 extra:
   notes: Fixed resizing instructions overwriting <code>$loop</code>
@@ -23,7 +23,7 @@ This technique:
 
 You will learn:
 
-1. How to install Debian (32 or 64-bit arm)
+1. How to install Debian (32- or 64-bit arm)
 2. How to modify the initrd to include virtio_gpu and other modules
 3. How to boot an unmodified Raspberry Pi image using the modified initrd
 
@@ -74,7 +74,7 @@ If you're not the DIY type, you can download my kernel and skip to [Resizing the
 
 ## Installing Debian
 
-You cannot boot the Raspberry Pi's kernel and initrd with QEMU, so you have to build your own that play nice with QEMU. (Wim 2023a, 2023b) To do this, you will be installing Debian arm in a virtual machine.
+You cannot boot the Raspberry Pi's kernel and initrd with QEMU, so you have to build your own that play nice with QEMU. (Wim, 2023a; 2023b) To do this, you will be installing Debian arm in a virtual machine.
 
 Create the image to which you will install Debian:
 
@@ -84,7 +84,7 @@ qemu-img create debian.img 4G
 
 ### 64-bit
 
-Download [Debian arm64](https://cdimage.debian.org/cdimage/release/current/arm64/iso-cd/). EFI targets are the easiest to emulate, all you have to do is provide a firmware file. (wookey, et al. 2023)
+Download [Debian arm64](https://cdimage.debian.org/cdimage/release/current/arm64/iso-cd/). EFI targets are the easiest to emulate, all you have to do is provide a firmware file. (Wookey, et al. 2023)
 
 ```bash
 q64 -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
@@ -110,7 +110,7 @@ q32 -drive format=raw,file=debian.img,if=none,id=hd0 \
 	-nographic -serial mon:stdio
 ```
 
-Adapted from "Run ARM/MIPS Debian on QEMU" (Lazymio 2021).
+Adapted from "Run ARM/MIPS Debian on QEMU" (Lazymio, 2021).
 
 Install Debian and reboot. It will reboot back into the installer; to exit, press <kbd>Ctrl+a</kbd> <kbd>x</kbd>. To boot into the new system, you will have to change the kernel and initrd.
 
@@ -231,7 +231,7 @@ Reboot into the image, where you will now have access to the emergency shell and
 
 # References
 
-- Lazymio. 2021. "Run ARM/MIPS Debian on QEMU." <https://blog.lazym.io/2021/04/16/Run-ARM-MIPS-Debian-on-QEMU/>.
-- Wim. 2023a. "Raspberry Pi 4 Emulation with QEMU Virt." <https://blog.grandtrunk.net/2023/03/raspberry-pi-4-emulation-with-qemu/>.
-- Wim. 2023b. StackExchange. <https://raspberrypi.stackexchange.com/a/142609>.
-- wookey, PaulWise, et al. 2023. "Arm64Qemu." Debian Wiki. <https://wiki.debian.org/Arm64Qemu>.
+- Lazymio. (2021). "Run ARM/MIPS Debian on QEMU." <https://blog.lazym.io/2021/04/16/Run-ARM-MIPS-Debian-on-QEMU/>.
+- Wim. (2023a). "Raspberry Pi 4 Emulation with QEMU Virt." <https://blog.grandtrunk.net/2023/03/raspberry-pi-4-emulation-with-qemu/>.
+- Wim. (2023b). StackExchange. <https://raspberrypi.stackexchange.com/a/142609>.
+- Wookey, Wise P., Walton J., Zhu S., Matsumoto R., Staudt J. C., & Thibault S. (2023). "Arm64Qemu." Debian Wiki. <https://wiki.debian.org/Arm64Qemu>.
