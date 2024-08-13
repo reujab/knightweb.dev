@@ -1,5 +1,6 @@
 #!/bin/bash -eux
 set -o pipefail
+shopt -s globstar
 
 prev_wd=$PWD
 cd "$(dirname "$0")"
@@ -21,6 +22,6 @@ zola build -fu "https://$website" -o "$tmp"
 zola build -o "$public"
 rm "$public/404.html"
 mv "$tmp"/*.xml "$public"
-for file in "$public"/*.{css,xml}; do minify "$file" -o "$file"; done
+for file in "$public"/**/*.{css,html,xml}; do minify --svg-keep-comments "$file" -o "$file"; done
 echo "Sitemap: https://$website/sitemap.xml" >> "$public/robots.txt"
 dpkg-deb --build "$deb" "$prev_wd"
