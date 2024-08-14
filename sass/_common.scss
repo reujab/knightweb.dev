@@ -69,6 +69,15 @@ kbd {
 	box-shadow: $border-light 0 -1px inset;
 }
 
+footer {
+	margin-top: 4rem;
+	font-size: 10pt;
+
+	p {
+		margin: 0.5em 0;
+	}
+}
+
 .implicit-link {
 	color: $text-light;
 	text-decoration: none;

@@ -27,7 +27,9 @@
 	}
 
 	.nav,
-	a[href^="#fr-"] {
+	a[href^="#fr-"],
+	img,
+	footer {
 		display: none;
 	}
 }

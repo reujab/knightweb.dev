@@ -17,6 +17,28 @@
 	<link rel="alternate" href="/atom.xml" type="application/atom+xml" title="Atom RSS" />
 </head>
 <body id="top">
+	{% block header %}
+	<div class="nav">
+		<a href="/">&larr; Go home</a>
+		{% block nav %}{% endblock %}
+	</div>
+	{% endblock %}
+
 	{% block body %}{% endblock %}
+
+	{% block footer %}
+	<footer>
+		<hr />
+		<p>&copy; Christopher Knight 2024</p>
+		<p>Proudly powered by <a href="https://www.getzola.org/" target="_blank">Zola</a></p>
+		<p>
+			<a href="/privacy/">Privacy</a>
+			|
+			<a href="/atom.xml">RSS</a>
+			|
+			<a href="https://github.com/reujab/knightweb.dev" target="_blank">Source</a>
+		</p>
+	</footer>
+	{% endblock %}
 </body>
 </html>
