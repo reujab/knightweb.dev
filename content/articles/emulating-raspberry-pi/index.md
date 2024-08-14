@@ -1,5 +1,5 @@
 ---
-title: Emulating Raspberry Pi OS
+title: How to Emulate Raspberry Pi OS
 authors: [Christopher Knight]
 date: 2024-08-04
 updated: 2024-08-11
