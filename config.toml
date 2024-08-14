@@ -11,8 +11,9 @@ highlight_code = true
 highlight_theme = "css"
 smart_punctuation = true
 
+extra_syntaxes_and_themes = [ "themes" ]
 highlight_themes_css = [
-  { theme = "demain", filename = "highlighting-light.css" },
+  { theme = "Github", filename = "highlighting-light.css" },
   { theme = "dracula", filename = "highlighting-dark.css" },
 ]
 
