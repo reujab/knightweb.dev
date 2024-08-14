@@ -17,6 +17,10 @@
 }
 
 @media print {
+	pre {
+		white-space: pre-wrap;
+	}
+
 	a {
 		color: blue;
 	}
