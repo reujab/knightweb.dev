@@ -36,6 +36,15 @@ sup {
 	line-height: 0;
 }
 
+code {
+	background-color: $bg-code-light;
+	border-radius: 5px;
+	font-family: Consolas, Fira Mono, FiraMono Nerd Font Mono, Source Code Pro, Liberation Mono,
+		monospace;
+	line-height: 0;
+	padding: 2px;
+}
+
 pre {
 	border-radius: 0.75em;
 	overflow: auto;
@@ -46,16 +55,11 @@ pre {
 		line-height: inherit;
 		margin: 1em;
 		padding: 0;
-	}
-}
 
-code {
-	background-color: $bg-code-light;
-	border-radius: 5px;
-	font-family: Consolas, Fira Mono, FiraMono Nerd Font Mono, Source Code Pro, Liberation Mono,
-		monospace;
-	line-height: 0;
-	padding: 2px;
+		// Even though it should be the same, my Android renders the <code> a little darker
+		// for some reason (Firefox and Chrome)
+		background-color: unset;
+	}
 }
 
 kbd {
