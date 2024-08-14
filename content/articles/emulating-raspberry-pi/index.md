@@ -84,7 +84,7 @@ qemu-img create debian.img 4G
 
 ### 64-bit
 
-Download [Debian arm64](https://cdimage.debian.org/cdimage/release/current/arm64/iso-cd/). EFI targets are the easiest to emulate, all you have to do is provide a firmware file. (Wookey, et al. 2023)
+Download [Debian arm64](https://cdimage.debian.org/cdimage/release/current/arm64/iso-cd/). EFI targets are the easiest to emulate; you simply need to provide a firmware file. (Wookey et al., 2023)
 
 ```bash
 q64 -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
@@ -102,12 +102,12 @@ Download [Debian armhf](https://cdimage.debian.org/cdimage/release/current/armhf
 sudo mount debian-armhf-netinst.iso /mnt
 
 q32 -drive format=raw,file=debian.img,if=none,id=hd0 \
-	-device virtio-blk-device,drive=hd0 \
-	-drive format=raw,file=debian-armhf-netinst.iso,if=none,id=hd1 \
-	-device virtio-blk-device,drive=hd1 \
-	-kernel /mnt/install.ahf/vmlinuz \
-	-initrd /mnt/install.ahf/initrd.gz \
-	-nographic -serial mon:stdio
+    -device virtio-blk-device,drive=hd0 \
+    -drive format=raw,file=debian-armhf-netinst.iso,if=none,id=hd1 \
+    -device virtio-blk-device,drive=hd1 \
+    -kernel /mnt/install.ahf/vmlinuz \
+    -initrd /mnt/install.ahf/initrd.gz \
+    -nographic -serial mon:stdio
 ```
 
 Adapted from "Run ARM/MIPS Debian on QEMU" (Lazymio, 2021).
@@ -122,10 +122,10 @@ loop=$(sudo losetup -fP --show debian.img)
 sudo mount ${loop}p1 /mnt
 
 q32 -drive format=raw,file=debian.img,if=none,id=hd0 \
-	-device virtio-blk-device,drive=hd0 \
-	-kernel /mnt/vmlinuz \
-	-initrd /mnt/initrd.img \
-	-nographic -serial mon:stdio
+    -device virtio-blk-device,drive=hd0 \
+    -kernel /mnt/vmlinuz \
+    -initrd /mnt/initrd.img \
+    -nographic -serial mon:stdio
 ```
 
 ## Modifying the initrd
@@ -193,12 +193,12 @@ q64 -drive format=raw,file=raspi.img \
 
 ```bash
 q32 -drive format=raw,file=raspi.img,if=none,id=hd0 \
-	-device virtio-blk-device,drive=hd0 \
-	-kernel /mnt/vmlinuz \
-	-initrd /mnt/initrd.img \
-	-append 'root=/dev/vda2 console=tty1' \
-	-device usb-ehci -device usb-kbd \
-	-device virtio-gpu-pci
+    -device virtio-blk-device,drive=hd0 \
+    -kernel /mnt/vmlinuz \
+    -initrd /mnt/initrd.img \
+    -append 'root=/dev/vda2 console=tty1' \
+    -device usb-ehci -device usb-kbd \
+    -device virtio-gpu-pci
 ```
 
 Congratulations, you're emulating Raspberry Pi OS with graphics support.
