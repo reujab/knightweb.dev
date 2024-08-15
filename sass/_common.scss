@@ -36,7 +36,8 @@ sup {
 	line-height: 0;
 }
 
-code {
+code,
+kbd {
 	background-color: $bg-code-light;
 	border-radius: 5px;
 	font-family: Consolas, Fira Mono, FiraMono Nerd Font Mono, Source Code Pro, Liberation Mono,
@@ -63,11 +64,6 @@ pre {
 }
 
 kbd {
-	border-radius: 5px;
-	border: 1px solid $border-light;
-	font-size: 11pt;
-	padding: 1px 2px;
-
 	// A box shadow is used to avoid increasing the element size.
 	// Ref: github.com
 	box-shadow: $border-light 0 -1px inset;
