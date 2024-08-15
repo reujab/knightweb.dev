@@ -66,6 +66,7 @@ pre {
 kbd {
 	// A box shadow is used to avoid increasing the element size.
 	// Ref: github.com
+	border: 1px solid $border-light;
 	box-shadow: $border-light 0 -1px inset;
 }
 
