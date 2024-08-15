@@ -88,8 +88,8 @@ Download [Debian arm64](https://cdimage.debian.org/cdimage/release/current/arm64
 
 ```bash
 q64 -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
-	-cdrom debian-arm64-netinst.iso \
-	-drive format=raw,file=debian.img
+    -cdrom debian-arm64-netinst.iso \
+    -drive format=raw,file=debian.img
 ```
 
 Install Debian and reboot into the new system. Be careful; if you power off the guest, you will not be able to boot back into the system without extra parameters (`-kernel` and `-initrd`).
@@ -184,9 +184,9 @@ You will see "Display is not active" but within a minute you should have output.
 
 ```bash
 q64 -drive format=raw,file=raspi.img \
-	-kernel /mnt/boot/vmlinuz \
-	-initrd /mnt/boot/initrd.img \
-	-append 'root=/dev/vda2 console=tty1'
+    -kernel /mnt/boot/vmlinuz \
+    -initrd /mnt/boot/initrd.img \
+    -append 'root=/dev/vda2 console=tty1'
 ```
 
 ### 32-bit
