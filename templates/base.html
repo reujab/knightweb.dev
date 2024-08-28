@@ -33,12 +33,14 @@
 		<p>Proudly powered by <a href="https://www.getzola.org/" target="_blank">Zola</a></p>
 		<p class="nav">
 			<a href="/privacy/">Privacy</a>
-			|
-			<a href="/atom.xml">RSS</a>
+			<script>
+				document.write("| <a href=mai" + "lto:hello@" + "knightweb.dev>Contact</a> ");
+			</script>
 			|
 			<a href="https://github.com/reujab/knightweb.dev" target="_blank">Source</a>
 		</p>
 	</footer>
+	<a href="mailto:badbot@knightweb.dev" style="display: none">Contact</a>
 	{% endblock %}
 </body>
 </html>
